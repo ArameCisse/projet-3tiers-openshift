@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: vm3-database
+  namespace: aramecisse-dev
+  labels:
+    app: mysql
+spec:
+  containers:
+  - name: mysql
+    image: mysql:8.0
+    env:
+    - name: MYSQL_ROOT_PASSWORD
+      value: "root123"
+    - name: MYSQL_DATABASE
+      value: "appdb"
+    - name: MYSQL_USER
+      value: "appuser"
+    - name: MYSQL_PASSWORD
+      value: "apppass123"
+    ports:
+    - containerPort: 3306
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service2
+  namespace: aramecisse-dev
+spec:
+  selector:
+    app: mysql
+  ports:
+  - protocol: TCP
+    port: 3306
+    targetPort: 3306
